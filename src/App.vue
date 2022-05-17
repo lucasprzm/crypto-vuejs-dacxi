@@ -1,26 +1,82 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <div class="row">
+      <h1>Coin Market</h1>
+      <input
+        type="text"
+        class="form-control bg-dark text-light rounded-0 border-0 my-4"
+        placeholder="Search Coin"
+        @keyup="searchCoin()"
+        v-model="textSearch"
+      />
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th v-for="title in titles" :key="title">{{ title }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(coin, index) in filteredCoins" :key="coin.id">
+            <td class="text-muted">
+              {{ index + 1 }}
+            </td>
+            <td>
+              <img :src="coin.image" style="width: 2rem" class="me-2" />
+              <span>
+                {{ coin.name }}
+              </span>
+              <span class="ms-2 text-uppercase text-muted">
+                {{ coin.symbol }}
+              </span>
+            </td>
+            <td>${{ coin.current_price }}</td>
+            <td :class="[coin.price_change_percentage_1h_in_currency > 0 ? success : danger]">
+              {{ coin.price_change_percentage_1h_in_currency.toFixed(2) }}%
+            </td>
+            <td :class="[coin.price_change_percentage_24h > 0 ? success : danger]">
+              {{ coin.price_change_percentage_24h.toFixed(2) }}%
+            </td>
+            <td>${{ coin.total_volume.toLocaleString() }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import "./styles/global.css";
+import api from "./services/api";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: {},
+  data() {
+    return {
+      coins: [],
+      filteredCoins: [],
+      titles: ["#", "Coin", "Price", "1h", "Price Change", "24h Volume"],
+      success: "text-success",
+      danger: "text-danger",
+      textSearch: "",
+    };
+  },
+  async mounted() {
+    const response = await api.get(
+      "/coins/markets?vs_currency=usd&ids=bitcoin%2Cterra-luna%2Cethereum%2Ccosmos%2Cdacxi&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d"
+    );
+    console.log(response);
+    this.coins = response.data;
+    this.filteredCoins = response.data;
+  },
+  methods: {
+    searchCoin() {
+      this.filteredCoins = this.coins.filter(
+        (coin) =>
+          coin.name.toLowerCase().includes(this.textSearch.toLowerCase()) ||
+          coin.symbol.toLowerCase().includes(this.textSearch.toLowerCase())
+      );
+    },
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
