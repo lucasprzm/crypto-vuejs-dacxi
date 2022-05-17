@@ -2,13 +2,6 @@
   <div class="container">
     <div class="row">
       <h1>Coin Market</h1>
-      <input
-        type="text"
-        class="form-control bg-dark text-light rounded-0 border-0 my-4"
-        placeholder="Search Coin"
-        @keyup="searchCoin()"
-        v-model="textSearch"
-      />
       <table class="table table-dark">
         <thead>
           <tr>
@@ -16,7 +9,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(coin, index) in filteredCoins" :key="coin.id">
+          <tr v-for="(coin, index) in coins" :key="coin.id">
             <td class="text-muted">
               {{ index + 1 }}
             </td>
@@ -36,7 +29,11 @@
             <td :class="[coin.price_change_percentage_24h > 0 ? success : danger]">
               {{ coin.price_change_percentage_24h.toFixed(2) }}%
             </td>
+            <td :class="[coin.price_change_percentage_7d_in_currency > 0 ? success : danger]">
+              {{ coin.price_change_percentage_7d_in_currency.toFixed(2) }}%
+            </td>
             <td>${{ coin.total_volume.toLocaleString() }}</td>
+            <td>${{ coin.market_cap.toLocaleString() }}</td>
           </tr>
         </tbody>
       </table>
@@ -54,28 +51,31 @@ export default {
   data() {
     return {
       coins: [],
-      filteredCoins: [],
-      titles: ["#", "Coin", "Price", "1h", "Price Change", "24h Volume"],
+      titles: ["#", "Coin", "Price", "1h", "24h", "7d", "24h Volume", "Market Cap"],
       success: "text-success",
       danger: "text-danger",
-      textSearch: "",
     };
   },
-  async mounted() {
-    const response = await api.get(
-      "/coins/markets?vs_currency=usd&ids=bitcoin%2Cterra-luna%2Cethereum%2Ccosmos%2Cdacxi&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d"
-    );
-    console.log(response);
-    this.coins = response.data;
-    this.filteredCoins = response.data;
+  mounted() {
+    this.getCoins();
   },
   methods: {
-    searchCoin() {
-      this.filteredCoins = this.coins.filter(
-        (coin) =>
-          coin.name.toLowerCase().includes(this.textSearch.toLowerCase()) ||
-          coin.symbol.toLowerCase().includes(this.textSearch.toLowerCase())
+    async getCoins() {
+      const response = await api.get(
+        "/coins/markets?vs_currency=usd&ids=bitcoin%2Cterra-luna%2Cethereum%2Ccosmos%2Cdacxi&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d"
       );
+      console.log(response);
+      this.coins = response.data;
+    },
+    updateCoins() {
+      setTimeout(() => {
+        this.getCoins();
+      }, 10000);
+    },
+  },
+  watch: {
+    coins() {
+      this.updateCoins();
     },
   },
 };
