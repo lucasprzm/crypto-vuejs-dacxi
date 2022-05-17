@@ -14,13 +14,15 @@
               {{ index + 1 }}
             </td>
             <td>
-              <img :src="coin.image" style="width: 2rem" class="me-2" />
-              <span>
-                {{ coin.name }}
-              </span>
-              <span class="ms-2 text-uppercase text-muted">
-                {{ coin.symbol }}
-              </span>
+              <a :href="coin.id">
+                <img :src="coin.image" style="width: 2rem" class="me-2" />
+                <span>
+                  {{ coin.name }}
+                </span>
+                <span class="ms-2 text-uppercase text-muted">
+                  {{ coin.symbol }}
+                </span>
+              </a>
             </td>
             <td>${{ coin.current_price }}</td>
             <td :class="[coin.price_change_percentage_1h_in_currency > 0 ? success : danger]">
