@@ -1,7 +1,14 @@
 <template>
   <div class="container">
     <div class="row">
-      <h1>Coin Market</h1>
+      <input
+        type="text"
+        class="form-control bg-dark text-light rounded-0 border-0 my-4"
+        placeholder="Search Coin"
+        @keyup="searchCoin()"
+        v-model="textSearch"
+      />
+      <h1>Cryptocurrency Prices by Market Cap</h1>
       <table class="table table-dark">
         <thead>
           <tr>
@@ -9,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(coin, index) in coins" :key="coin.id">
+          <tr v-for="(coin, index) in filteredCoins" :key="coin.id">
             <td class="text-muted">
               {{ index + 1 }}
             </td>
@@ -51,9 +58,11 @@ export default {
   data() {
     return {
       coins: [],
+      filteredCoins: [],
       titles: ["#", "Coin", "Price", "1h", "24h", "7d", "24h Volume", "Market Cap"],
       success: "text-success",
       danger: "text-danger",
+      textSearch: "",
     };
   },
   mounted() {
@@ -65,12 +74,20 @@ export default {
         "/coins/markets?vs_currency=usd&ids=bitcoin%2Cterra-luna%2Cethereum%2Ccosmos%2Cdacxi&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d"
       );
       //console.log(response);
+      this.filteredCoins = response.data;
       this.coins = response.data;
     },
     updateCoins() {
       setTimeout(() => {
         this.getCoins();
       }, 20000);
+    },
+    searchCoin() {
+      this.filteredCoins = this.coins.filter(
+        (coin) =>
+          coin.name.toLowerCase().includes(this.textSearch.toLowerCase()) ||
+          coin.symbol.toLowerCase().includes(this.textSearch.toLowerCase())
+      );
     },
   },
   watch: {
