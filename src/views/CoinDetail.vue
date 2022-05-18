@@ -10,8 +10,15 @@
     </div>
     <div>
       <div>
-        <div class="progress-bar">
-          <div class="progress" :style="{ width: filling + '%' }"></div>
+        <div class="progress">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            :aria-valuenow="`${(coin.current_price / coin.high_24h) * 100}`"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            :style="{ width: `${(coin.current_price / coin.high_24h) * 100}%` }"
+          ></div>
         </div>
         <div>
           <span>{{ coin.low_24h }}</span>
@@ -53,7 +60,7 @@
       </div>
     </div>
     <div>
-      <label for="data-historica">Data (histórico)</label>
+      <label for="data-historica">Date (history)</label>
       <input type="date" name="data-historica" @change="getHistoricalValue" />
       <span>{{ historicalValue }}</span>
     </div>
@@ -68,11 +75,10 @@ export default {
     return {
       coin: [],
       historicalValue: 0,
-      filling: 0,
     };
   },
   mounted() {
-    this.getCoin(), this.startProgress();
+    this.getCoin();
   },
   methods: {
     async getCoin() {
@@ -90,27 +96,18 @@ export default {
       // console.log(response.data.market_data.current_price.usd);
       this.historicalValue = response.data.market_data.current_price.usd;
     },
-    startProgress() {
-      this.filling = this.coin.low_24h;
-      const timer = setInterval(() => {
-        this.filling += (5 / 100) * this.coin.low_24h;
-        if (this.filling == this.coin.current_price) {
-          clearInterval(timer);
-        }
-      }, 500);
+    updateCoin() {
+      setTimeout(() => {
+        this.getCoin();
+      }, 20000);
+    },
+  },
+  watch: {
+    coin() {
+      this.updateCoin();
     },
   },
 };
 </script>
 
-<style scoped>
-.progress-bar {
-  height: 30px;
-  width: 500px;
-  border: 1px solid #000;
-}
-.progress {
-  background-color: red;
-  height: 100%;
-}
-</style>
+<style scoped></style>
