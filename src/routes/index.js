@@ -9,6 +9,7 @@ const routes = [
   },
   {
     path: "/:coin",
+    name: "CoinDetail",
     component: CoinDetail,
   },
 ];
