@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <img class="img-fluid" src="../assets/Coin.svg" alt="Coin" />
+      <img class="img-fluid flip-horizontal-bottom" src="../assets/Coin.svg" alt="Coin" />
     </div>
     <div class="row">
       <coins-table />
@@ -26,5 +26,27 @@ export default {
 <style scoped>
 .img-fluid {
   max-height: 28vh;
+}
+.flip-horizontal-bottom {
+  animation: flip-horizontal-bottom 2s ease-in-out infinite both;
+}
+
+@keyframes flip-horizontal-bottom {
+  0% {
+    -webkit-transform: rotateY(0);
+    transform: rotateY(0);
+  }
+  50% {
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+  }
+  75% {
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+  }
+  100% {
+    -webkit-transform: rotateY(-0deg);
+    transform: rotateY(-0deg);
+  }
 }
 </style>
