@@ -3,9 +3,7 @@
     <div class="row">
       <img class="img-fluid flip-horizontal-bottom" src="../assets/Coin.svg" alt="Coin" />
     </div>
-    <div class="row">
-      <coins-table />
-    </div>
+    <coins-table />
   </div>
 </template>
 
