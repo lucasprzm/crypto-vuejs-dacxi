@@ -58,8 +58,10 @@
     </div>
     <!-- Coin Stats End -->
     <form class="m-3">
-      <label for="history">Price history from:</label>
-      <input type="datetime-local" name="history" @change="getDateTimeInput" />
+      <label for="history-from">Price history from:</label>
+      <input type="datetime-local" name="history-from" @change="getDateTimeInputFrom" />
+      <label for="history-to">to:</label>
+      <input type="datetime-local" name="history-to" @change="getDateTimeInputTo" />
       <input type="reset" @click="resetDateTimeInput" value="Reset" />
     </form>
     <table class="table">
@@ -94,7 +96,7 @@ export default {
       sevenDaysHistory: {},
       titles: ["Date", "Price", "Market Cap", "24 Hour Trading Vol"],
       from: "",
-      to: Number(new Date()) / 1000,
+      to: "",
     };
   },
   mounted() {
@@ -113,28 +115,24 @@ export default {
       }, 20000);
     },
     async getSevenDays() {
-      //let date = e.target.value.split("-").reverse().join("-");
       if (!this.from) {
         let date = new Date();
         date.setDate(date.getDate() - 7);
         this.from = date / 1000;
-        console.log("aqui", this.from);
-      } else {
-        this.to = this.from + 604800;
-        console.log("passou aqui, linha 125");
+        this.to = Number(new Date()) / 1000;
       }
       const response = await api.get(
         `/coins/${this.$route.params.coin}/market_chart/range?vs_currency=usd&from=${this.from}&to=${this.to}`
       );
       this.sevenDaysHistory = response.data;
-      console.log("aqui 2", this.from);
-      console.log("aqui 3", this.to);
     },
-    getDateTimeInput(e) {
-      // Valor em UNIX formatado para a API
+    getDateTimeInputFrom(e) {
       this.from = Date.parse(e.target.value) / 1000;
       this.getSevenDays();
-      console.log(e.target.value);
+    },
+    getDateTimeInputTo(e) {
+      this.to = Date.parse(e.target.value) / 1000;
+      this.getSevenDays();
     },
     resetDateTimeInput() {
       this.from = "";
