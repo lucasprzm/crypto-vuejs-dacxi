@@ -97,7 +97,6 @@ export default {
 <style scoped>
 .input {
   border: 2px solid #aa69ff66;
-  border-radius: 30px;
 }
 .table {
   color: #000032;
