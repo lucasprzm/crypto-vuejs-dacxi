@@ -57,10 +57,11 @@
       </div>
     </div>
     <!-- Coin Stats End -->
-    <div class="m-3">
-      <label for="from">Price history from:</label>
-      <input type="date" name="from" />
-    </div>
+    <form class="m-3">
+      <label for="history">Price history from:</label>
+      <input type="datetime-local" name="history" @change="getDateTimeInput" />
+      <input type="reset" @click="resetDateTimeInput" value="Reset" />
+    </form>
     <table class="table">
       <thead>
         <tr>
@@ -88,10 +89,8 @@ export default {
   data() {
     return {
       coins: [],
-
       success: "text-success",
       danger: "text-danger",
-
       sevenDaysHistory: {},
       titles: ["Date", "Price", "Market Cap", "24 Hour Trading Vol"],
       from: "",
@@ -108,7 +107,11 @@ export default {
       );
       this.coins = response.data;
     },
-
+    updateCoin() {
+      setTimeout(() => {
+        this.getCoin();
+      }, 20000);
+    },
     async getSevenDays() {
       //let date = e.target.value.split("-").reverse().join("-");
       if (!this.from) {
@@ -116,6 +119,9 @@ export default {
         date.setDate(date.getDate() - 7);
         this.from = date / 1000;
         console.log("aqui", this.from);
+      } else {
+        this.to = this.from + 604800;
+        console.log("passou aqui, linha 125");
       }
       const response = await api.get(
         `/coins/${this.$route.params.coin}/market_chart/range?vs_currency=usd&from=${this.from}&to=${this.to}`
@@ -124,11 +130,16 @@ export default {
       console.log("aqui 2", this.from);
       console.log("aqui 3", this.to);
     },
-
-    updateCoin() {
-      setTimeout(() => {
-        this.getCoin();
-      }, 20000);
+    getDateTimeInput(e) {
+      // Valor em UNIX formatado para a API
+      this.from = Date.parse(e.target.value) / 1000;
+      this.getSevenDays();
+      console.log(e.target.value);
+    },
+    resetDateTimeInput() {
+      this.from = "";
+      this.to = Number(new Date()) / 1000;
+      this.getSevenDays();
     },
   },
   watch: {
