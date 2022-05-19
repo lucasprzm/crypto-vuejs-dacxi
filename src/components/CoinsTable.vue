@@ -7,6 +7,7 @@
     v-model="textSearch"
   />
   <h1>Cryptocurrency Prices by Market Cap</h1>
+  <h5>Click on the coin symbol or name to access coin data.</h5>
   <table class="table">
     <thead>
       <tr>
@@ -95,19 +96,6 @@ export default {
 </script>
 
 <style scoped>
-.input {
-  border: 2px solid #aa69ff66;
-}
-.table {
-  color: #000032;
-}
-.table th {
-  border-top: 2px solid #aa69ff66;
-  border-bottom: 2px solid #aa69ff66;
-}
-.table tr {
-  border-bottom: 2px solid #aa69ff66;
-}
 .table a span {
   text-decoration: none;
   color: #000032;
