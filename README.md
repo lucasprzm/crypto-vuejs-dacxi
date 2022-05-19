@@ -10,7 +10,7 @@
 
 <img src="exemplo-image.png" alt="exemplo imagem">
 
-> A simple cryptocurrency dashboard page using CoinGecko API data, built using Vue.js for Dacxi Technical Test. There are 5 cryptocurrencies on this project: BTC, ETH, ATOM, LUNA and DACXI. The dashboard is updated in 20 seconds to get the most updated values of the cryptocurrency market.
+> A simple cryptocurrency dashboard page using CoinGecko API data, built using Vue.js for Dacxi Technical Test. There are 5 cryptocurrencies on this project: BTC, ETH, ATOM, LUNA and DACXI. The dashboard values are updated in 20 seconds to get the most updated values of the cryptocurrency market using USD currency to compare.
 
 ## Features
 
@@ -20,15 +20,14 @@
 
 ## Framework and External Libs
 
-- Vue.js - JavaScript framework
-- Vue Router - used to create routes because the project has more than one view
-- Axios - used to make XMLHttpRequests from the browser to the API
+- Vue.js - JavaScript framework for building user interfaces.
+- Vue Router - used to create routes because the project has more than one view.
+- Axios - used to make XMLHttpRequests from the browser to the API.
+- Bootstrap - responsive framework for building responsive and mobile-first sites.
 
 ## 💻 Prerequisites to Run the Project
 
 Before start, check if you have these following requirement:
-
-<!---Estes são apenas requisitos de exemplo. Adicionar, duplicar ou remover conforme necessário--->
 
 - Most recent LTS version of NodeJS
 
