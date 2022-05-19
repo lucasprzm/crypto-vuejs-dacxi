@@ -8,7 +8,7 @@
         <h3 class="text-uppercase">({{ coin.symbol }})</h3>
       </div>
       <div class="d-flex align-items-center">
-        <h2 class="me-2">${{ coin.current_price.toFixed(2) }}</h2>
+        <h2 class="me-3">${{ coin.current_price.toFixed(2) }}</h2>
         <h5 :class="[coin.price_change_percentage_24h > 0 ? success : danger]">
           {{ coin.price_change_percentage_24h.toFixed(2) }}%
         </h5>
@@ -57,13 +57,23 @@
       </div>
     </div>
     <!-- Coin Stats End -->
-    <form class="m-3">
-      <label for="history-from">Price history from:</label>
-      <input type="datetime-local" name="history-from" @change="getDateTimeInputFrom" />
-      <label for="history-to">to:</label>
-      <input type="datetime-local" name="history-to" @change="getDateTimeInputTo" />
-      <input type="reset" @click="resetDateTimeInput" value="Reset" />
-    </form>
+    <!-- Historical Data Text and Inputs -->
+    <div class="p-3">
+      <h3>Historical Data</h3>
+      <span
+        >Price history of 7 days ago, you can change the day and time or reset. Above 90 days of
+        interval, the data will have a daily interval.</span
+      >
+      <form class="d-flex justify-content-between align-items-center m-3">
+        <label for="history-from">From:</label>
+        <input type="datetime-local" name="history-from" @change="getDateTimeInputFrom" />
+        <label for="history-to">To:</label>
+        <input type="datetime-local" name="history-to" @change="getDateTimeInputTo" />
+        <input class="px-2" type="reset" @click="resetDateTimeInput" value="Reset" />
+      </form>
+    </div>
+    <!-- Historical Data Text and Inputs End -->
+    <!-- Historical Data Table -->
     <table class="table">
       <thead>
         <tr>
@@ -73,7 +83,10 @@
       <tbody>
         <tr scope="row" v-for="(values, index) in sevenDaysHistory.prices" :key="index">
           <td>
-            {{ new Date(sevenDaysHistory.prices[index][0]).toLocaleString() }}
+            {{ new Date(sevenDaysHistory.prices[index][0]).toLocaleString().split(" ")[0] }}
+          </td>
+          <td>
+            {{ new Date(sevenDaysHistory.prices[index][0]).toLocaleString().split(" ")[1] }}
           </td>
           <td>${{ sevenDaysHistory.prices[index][1].toFixed(2).toLocaleString() }}</td>
           <td>${{ sevenDaysHistory.market_caps[index][1].toFixed(0).toLocaleString() }}</td>
@@ -81,6 +94,7 @@
         </tr>
       </tbody>
     </table>
+    <!-- Historical Data Table End -->
   </div>
 </template>
 
@@ -94,7 +108,7 @@ export default {
       success: "text-success",
       danger: "text-danger",
       sevenDaysHistory: {},
-      titles: ["Date", "Price", "Market Cap", "24 Hour Trading Vol"],
+      titles: ["Date", "Time", "Price", "Market Cap", "24 Hour Trading Vol"],
       from: "",
       to: "",
     };
