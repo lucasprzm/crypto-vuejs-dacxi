@@ -11,7 +11,8 @@ a {
   text-decoration: none;
 }
 h1,
-h2 {
+h2,
+span {
   font-family: "Poppins", sans-serif;
   font-weight: bold;
 }
@@ -21,7 +22,16 @@ h5 {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
 }
-span {
+input {
   font-family: "Poppins", sans-serif;
-  font-weight: bold;
+}
+.table {
+  color: #000032;
+}
+.table th {
+  border-top: 2px solid #000032;
+  border-bottom: 2px solid #000032;
+}
+.table tr {
+  border-bottom: 2px solid #000032;
 }
