@@ -59,10 +59,7 @@
     <!-- Coin Stats End -->
     <div class="m-3">
       <label for="from">Price history from:</label>
-      <input type="date" name="from" @change="getHistoricalValue" />
-      <label for="to">to:</label>
-      <input type="date" name="to" @change="getHistoricalValue" />
-      <!-- <span>{{ historicalValue }}</span> -->
+      <input type="date" name="from" />
     </div>
     <table class="table">
       <thead>
@@ -71,13 +68,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr scope="row" v-for="(values, index) in marketValue.prices" :key="index">
+        <tr scope="row" v-for="(values, index) in sevenDaysHistory.prices" :key="index">
           <td>
-            {{ new Date(marketValue.prices[index][0]).toLocaleString().split(" ")[0] }}
+            {{ new Date(sevenDaysHistory.prices[index][0]).toLocaleString() }}
           </td>
-          <td>${{ marketValue.prices[index][1].toFixed(2).toLocaleString() }}</td>
-          <td>${{ marketValue.market_caps[index][1].toFixed(0).toLocaleString() }}</td>
-          <td>${{ marketValue.total_volumes[index][1].toLocaleString() }}</td>
+          <td>${{ sevenDaysHistory.prices[index][1].toFixed(2).toLocaleString() }}</td>
+          <td>${{ sevenDaysHistory.market_caps[index][1].toFixed(0).toLocaleString() }}</td>
+          <td>${{ sevenDaysHistory.total_volumes[index][1].toLocaleString() }}</td>
         </tr>
       </tbody>
     </table>
@@ -91,17 +88,18 @@ export default {
   data() {
     return {
       coins: [],
-      historicalValue: 0,
+
       success: "text-success",
       danger: "text-danger",
-      marketValue: {},
+
+      sevenDaysHistory: {},
       titles: ["Date", "Price", "Market Cap", "24 Hour Trading Vol"],
-      from: 0,
-      to: Number(new Date()),
+      from: "",
+      to: Number(new Date()) / 1000,
     };
   },
   mounted() {
-    this.getCoin(), this.getMarketChart();
+    this.getCoin(), this.getSevenDays();
   },
   methods: {
     async getCoin() {
@@ -109,31 +107,24 @@ export default {
         `/coins/markets?vs_currency=usd&ids=${this.$route.params.coin}&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d`
       );
       this.coins = response.data;
-      //console.log(this.coins);
     },
-    // async getHistoricalValue(e) {
-    //   let date = e.target.value.split("-").reverse().join("-");
-    //   const response = await api.get(
-    //     `/coins/${this.$route.params.coin}/history?date=${date}&localization=false`
-    //   );
-    //   // console.log(response.data.market_data.current_price.usd);
-    //   this.historicalValue = response.data.market_data.current_price.usd;
-    // },
-    async getMarketChart() {
+
+    async getSevenDays() {
       //let date = e.target.value.split("-").reverse().join("-");
       if (!this.from) {
         let date = new Date();
-        date.setDate(date.getHours() - 4);
-        this.from = this.to - 86400 * 3;
+        date.setDate(date.getDate() - 7);
+        this.from = date / 1000;
         console.log("aqui", this.from);
       }
       const response = await api.get(
         `/coins/${this.$route.params.coin}/market_chart/range?vs_currency=usd&from=${this.from}&to=${this.to}`
       );
-      this.marketValue = response.data;
+      this.sevenDaysHistory = response.data;
       console.log("aqui 2", this.from);
       console.log("aqui 3", this.to);
     },
+
     updateCoin() {
       setTimeout(() => {
         this.getCoin();
