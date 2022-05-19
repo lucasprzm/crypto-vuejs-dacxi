@@ -1,8 +1,7 @@
 <template>
   <nav class="navbar p-2">
-    <div class="container-fluid d-flex">
+    <div class="container-sm d-flex justify-content-center justify-content-sm-between">
       <a class="navbar-brand" href="/"><img src="../assets/Logo.svg" alt="Brand Logo" /></a>
-      <button class="btn btn-outline-light" type="submit">Favorites</button>
     </div>
   </nav>
 </template>
