@@ -121,10 +121,14 @@ export default {
         this.from = date / 1000;
         this.to = Number(new Date()) / 1000;
       }
-      const response = await api.get(
-        `/coins/${this.$route.params.coin}/market_chart/range?vs_currency=usd&from=${this.from}&to=${this.to}`
-      );
-      this.sevenDaysHistory = response.data;
+      try {
+        const response = await api.get(
+          `/coins/${this.$route.params.coin}/market_chart/range?vs_currency=usd&from=${this.from}&to=${this.to}`
+        );
+        this.sevenDaysHistory = response.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
     getDateTimeInputFrom(e) {
       this.from = Date.parse(e.target.value) / 1000;
