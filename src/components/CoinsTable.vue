@@ -5,7 +5,7 @@
         type="text"
         class="form-control rounded-pill my-4"
         placeholder="Search Coin"
-        @keyup="searchCoin()"
+        @keyup="searchCoin"
         v-model="textSearch"
       />
     </div>
