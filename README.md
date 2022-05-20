@@ -27,7 +27,7 @@
 
 ## 💻 Prerequisites to Run the Project
 
-Before start, check if you have these following requirement:
+Before start, check if you have the following requirement:
 
 - Most recent LTS version of NodeJS
 
