@@ -10,7 +10,7 @@
         <h3 class="text-uppercase">({{ coin.symbol }})</h3>
       </div>
       <div class="d-flex align-items-center">
-        <h2 class="me-3">${{ coin.current_price.toFixed(2) }}</h2>
+        <h2 class="me-3">${{ coin.current_price.toFixed(5).toLocaleString() }}</h2>
         <h5 :class="[coin.price_change_percentage_24h > 0 ? success : danger]">
           {{ coin.price_change_percentage_24h.toFixed(2) }}%
         </h5>
@@ -127,7 +127,7 @@
             <td>
               {{ new Date(sevenDaysHistory.prices[index][0]).toLocaleString().split(" ")[1] }}
             </td>
-            <td>${{ sevenDaysHistory.prices[index][1].toFixed(2).toLocaleString() }}</td>
+            <td>${{ sevenDaysHistory.prices[index][1].toFixed(5).toLocaleString() }}</td>
             <td>${{ sevenDaysHistory.market_caps[index][1].toFixed(0).toLocaleString() }}</td>
             <td>${{ sevenDaysHistory.total_volumes[index][1].toLocaleString() }}</td>
           </tr>
