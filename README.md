@@ -5,7 +5,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/lucasprzm/crypto-vuejs-dacxi?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/lucasprzm/crypto-vuejs-dacxi?style=for-the-badge)
 
-> A simple cryptocurrency dashboard page using CoinGecko API data, built using Vue.js for Dacxi Technical Test. There are 5 cryptocurrencies on this project: BTC, ETH, ATOM, LUNA and DACXI. The dashboard values are updated in 20 seconds to get the most updated values of the cryptocurrency market using USD currency to compare.
+> A cryptocurrency data page using CoinGecko API , built using Vue.js for Dacxi Technical Test. There are 5 cryptocurrencies on this project: BTC, ETH, ATOM, LUNA and DACXI. The dashboard values are updated in 20 seconds to get the most updated values of the cryptocurrency market using USD currency to compare and the user can search for historical data of the 5 cryptocurrencies by date and time.
 
 ## Features
 
