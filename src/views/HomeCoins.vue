@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-lg">
     <div class="row">
       <img class="img-fluid flip-horizontal-bottom" src="../assets/Coin.svg" alt="Coin" />
     </div>

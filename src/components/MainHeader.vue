@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar p-2">
-    <div class="container-sm d-flex justify-content-center justify-content-sm-between">
+    <div class="container-lg d-flex justify-content-center justify-content-sm-between">
       <a class="navbar-brand" :href="homeRef"><img src="../assets/Logo.svg" alt="Brand Logo" /></a>
     </div>
   </nav>

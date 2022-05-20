@@ -11,50 +11,54 @@
     </div>
   </div>
   <div class="row">
-    <h1>Cryptocurrency Prices by Market Cap</h1>
-    <span class="fw-normal">Click on the coin symbol or name to access coin data.</span>
+    <div class="col">
+      <h1>Cryptocurrency Prices by Market Cap</h1>
+      <span class="fw-normal">Click on the coin symbol or name to access coin data.</span>
+    </div>
   </div>
   <div class="row">
-    <div class="table-responsive-sm">
-      <table class="table align-middle">
-        <thead>
-          <tr>
-            <th scope="col" v-for="title in titles" :key="title">
-              {{ title }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr scope="row" v-for="(coin, index) in filteredCoins" :key="coin.id">
-            <td class="text-muted">
-              {{ index + 1 }}
-            </td>
-            <td>
-              <a :href="coin.id">
-                <img :src="coin.image" style="width: 2rem" class="me-2" />
-                <span>
-                  {{ coin.name }}
-                </span>
-                <span class="ms-2 text-uppercase text-muted">
-                  {{ coin.symbol }}
-                </span>
-              </a>
-            </td>
-            <td>${{ coin.current_price }}</td>
-            <td :class="[coin.price_change_percentage_1h_in_currency > 0 ? success : danger]">
-              {{ coin.price_change_percentage_1h_in_currency.toFixed(2) }}%
-            </td>
-            <td :class="[coin.price_change_percentage_24h > 0 ? success : danger]">
-              {{ coin.price_change_percentage_24h.toFixed(2) }}%
-            </td>
-            <td :class="[coin.price_change_percentage_7d_in_currency > 0 ? success : danger]">
-              {{ coin.price_change_percentage_7d_in_currency.toFixed(2) }}%
-            </td>
-            <td>${{ coin.total_volume.toLocaleString() }}</td>
-            <td>${{ coin.market_cap.toLocaleString() }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col">
+      <div class="table-responsive-sm">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th scope="col" v-for="title in titles" :key="title">
+                {{ title }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr scope="row" v-for="(coin, index) in filteredCoins" :key="coin.id">
+              <td class="text-muted">
+                {{ index + 1 }}
+              </td>
+              <td>
+                <a :href="coin.id">
+                  <img :src="coin.image" style="width: 2rem" class="me-2" />
+                  <span>
+                    {{ coin.name }}
+                  </span>
+                  <span class="ms-2 text-uppercase text-muted">
+                    {{ coin.symbol }}
+                  </span>
+                </a>
+              </td>
+              <td>${{ coin.current_price }}</td>
+              <td :class="[coin.price_change_percentage_1h_in_currency > 0 ? success : danger]">
+                {{ coin.price_change_percentage_1h_in_currency.toFixed(2) }}%
+              </td>
+              <td :class="[coin.price_change_percentage_24h > 0 ? success : danger]">
+                {{ coin.price_change_percentage_24h.toFixed(2) }}%
+              </td>
+              <td :class="[coin.price_change_percentage_7d_in_currency > 0 ? success : danger]">
+                {{ coin.price_change_percentage_7d_in_currency.toFixed(2) }}%
+              </td>
+              <td>${{ coin.total_volume.toLocaleString() }}</td>
+              <td>${{ coin.market_cap.toLocaleString() }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
